@@ -61,7 +61,7 @@ async def cmd_status(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         f"📡 Chains: <code>{', '.join(cfg['chains'])}</code>\n"
         f"⏱ Scan interval: <code>{cfg['scan_interval_seconds']}s</code>\n"
         f"🔇 Cooldown: <code>{cfg['cooldown_minutes']} min</code>\n"
-        f"📋 Pairs/chain: <code>{cfg.get('top_pairs_per_chain', 50)}</code>\n"
+        f"📋 Pages/chain: <code>{cfg.get('pages_per_chain', 3)}</code> (~{cfg.get('pages_per_chain', 3) * 20 * 3} pools)\n"
         "━━━━━━━━━━━━━━━━━━━━\n"
         "<b>Filters:</b>\n"
         f"  📊 Vol ratio: <code>×{f['volume_ratio_min']}</code>\n"
@@ -254,7 +254,8 @@ async def cmd_set(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
             "<code>atr_lookback_candles</code> — e.g. 16\n"
             "<code>scan_interval_seconds</code> — e.g. 60\n"
             "<code>cooldown_minutes</code> — e.g. 60\n"
-            "<code>top_pairs_per_chain</code> — e.g. 50\n",
+            "<code>top_pairs_per_chain</code> — e.g. 50\n"
+            "<code>pages_per_chain</code> — e.g. 3 (pages of 20 pools each)\n",
             parse_mode=ParseMode.HTML,
         )
         return
@@ -276,7 +277,7 @@ async def cmd_set(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         else:
             value = float(raw_val)
             if param in ("min_15m_volume_usd", "scan_interval_seconds",
-                         "cooldown_minutes", "top_pairs_per_chain", "atr_lookback_candles"):
+                         "cooldown_minutes", "pages_per_chain", "atr_lookback_candles"):
                 value = int(value)
     except ValueError:
         await update.message.reply_text("❌ Invalid value.")
