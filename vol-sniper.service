@@ -1,0 +1,15 @@
+[Unit]
+Description=VOL-SNIPER Crypto Volume Scanner
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/vol-sniper
+ExecStart=/opt/vol-sniper/venv/bin/python run.py
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
